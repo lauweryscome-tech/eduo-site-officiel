@@ -23,7 +23,7 @@ assets/img/             captures réelles de l’app (AVIF + JPEG/PNG de secours
 - **Couleurs, tailles, animations** : `assets/css/site.css` (les couleurs sont en haut, dans `:root`).
 - **Réseaux sociaux** : en haut de `assets/js/site.js`, remplis `SOCIAL` (TikTok, Instagram, YouTube). Un lien vide n’est pas affiché.
 - **Nouvelles captures** : place-les dans `_sources/captures`, déclare-les dans `_sources/outils/images.json`, puis lance `swift _sources/outils/images.swift`.
-- **Nom de domaine** : il est écrit `www.eduo-app.fr` dans `_sources/outils/page.py` (constante `SITE`), `robots.txt`, `sitemap.xml` et `mentions-legales.html`. Remplace-le partout si tu en choisis un autre.
+- **Nom de domaine** : il est écrit `www.eduoapp.fr` dans `_sources/outils/page.py` (constante `SITE`), `robots.txt`, `sitemap.xml` et `mentions-legales.html`. Remplace-le partout si tu en choisis un autre.
 - **Hébergeur** : les mentions légales indiquent GitHub Pages. Change ce paragraphe si tu héberges ailleurs.
 
 ## Tester
