@@ -28,17 +28,20 @@ const SOCIAL = {
   addEventListener("keydown", (e) => { if (e.key === "Escape" && nav.dataset.open === "true") { setMenu(false); toggle.focus(); } });
 
   // Le menu se cache quand on descend, revient quand on remonte
-  let lastY = scrollY;
+  let lastY = scrollY, goingDown = false;
   const dock = $("#dock"), hero = $("#accueil"), finale = $("#telecharger");
   const onScroll = () => {
     const y = scrollY;
-    if (nav.dataset.open !== "true") nav.classList.toggle("is-hidden", y > 400 && y > lastY + 4);
-    if (y < lastY - 4 || y < 400) nav.classList.remove("is-hidden");
+    if (y > lastY + 4) goingDown = true;
+    else if (y < lastY - 4) goingDown = false;
+    if (nav.dataset.open !== "true") nav.classList.toggle("is-hidden", y > 400 && goingDown);
+    if (y < 400) nav.classList.remove("is-hidden");
     lastY = y;
-    // Bouton collant (mobile) : après l’accueil, jusqu’à la section finale
+    // Bouton collant (mobile) : après l’accueil et avant la section finale, quand on remonte
+    // (il se range pendant la lecture, vers le bas, pour ne jamais cacher le texte)
     const pastHero = hero.getBoundingClientRect().bottom < 80;
     const atEnd = finale.getBoundingClientRect().top < innerHeight * 0.9;
-    dock.classList.toggle("is-visible", pastHero && !atEnd);
+    dock.classList.toggle("is-visible", pastHero && !atEnd && !goingDown);
   };
   addEventListener("scroll", onScroll, { passive: true });
   onScroll();
