@@ -367,8 +367,8 @@ html:not(.js) .stage { display: none; }
   .feature__visual .scene > :nth-child(4) { right: 0 !important; left: auto !important; bottom: 7% !important; top: auto !important; }
   .feature__visual .scene > :nth-child(5) { right: 0 !important; left: auto !important; top: 2% !important; bottom: auto !important; }
   /* Coachs : Clara en haut à gauche, Adam à droite, le message de Clara en bas à gauche */
-  .feature__visual .scene[data-scene="3"] > :nth-child(4) { top: 34% !important; bottom: auto !important; }
-  .feature__visual .scene[data-scene="3"] > :nth-child(5) { left: 0 !important; right: auto !important; bottom: 3% !important; top: auto !important; }
+  .feature__visual .scene[data-scene="4"] > :nth-child(4) { top: 34% !important; bottom: auto !important; }
+  .feature__visual .scene[data-scene="4"] > :nth-child(5) { left: 0 !important; right: auto !important; bottom: 3% !important; top: auto !important; }
   body { font-size: 1rem; }
   .hero { padding-top: calc(var(--nav-h) + 36px); }
   .hero__actions .btn { width: 100%; }
