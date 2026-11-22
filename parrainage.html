@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Invitation Eduo</title>
+  <meta name="description" content="Un ami t’invite sur Eduo, l’app de révision des lycéens. Installe Eduo et entre son code de parrainage.">
+  <!-- Page personnelle (code d’un élève dans l’adresse) : pas d’indexation. -->
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#F6F2EA">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <style>
+    .invite { padding: calc(var(--nav-h) + 48px) 0 96px; }
+    .invite h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); max-width: 18ch; }
+    .invite .lead { margin-top: 16px; color: var(--ink-2); max-width: 52ch; font-size: 1.1rem; }
+    .invite .card { margin-top: 32px; padding: clamp(24px, 4vw, 44px); border-radius: 28px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); max-width: 560px; }
+    .invite .code-label { font-weight: 600; color: var(--ink-2); }
+    .invite .code { margin-top: 8px; font: 700 clamp(2.2rem, 9vw, 3.2rem)/1.1 ui-rounded, "SF Pro Rounded", system-ui, sans-serif; letter-spacing: .06em; color: var(--violet); font-variant-numeric: tabular-nums; }
+    .invite .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .invite .btn--ghost { background: transparent; color: var(--violet); box-shadow: inset 0 0 0 1.5px var(--violet); }
+    .invite ol { margin-top: 32px; padding-left: 1.2em; max-width: 56ch; }
+    .invite li { margin-top: 12px; color: var(--ink-2); }
+    .invite li strong { color: var(--ink); }
+    .invite .note { margin-top: 28px; color: var(--ink-2); font-size: .92rem; max-width: 60ch; }
+    .invite [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+<header class="nav" data-open="false">
+  <div class="nav__bar">
+    <a class="brand" href="./"><img src="assets/img/icone-192.png" alt="" width="34" height="34"><span>Edu<b>o</b></span></a>
+    <span style="margin-left:auto"></span>
+    <a class="btn nav__cta" href="./" style="display:inline-flex">Découvrir Eduo</a>
+  </div>
+</header>
+<main class="invite">
+  <div class="wrap">
+    <h1>Un ami t’invite à réviser avec Eduo</h1>
+    <p class="lead">Eduo transforme ton cours en quiz, flashcards et programme de révision. Installe l’app, puis entre le code de ton ami : il recevra un mois d’Eduo Plus quand tu auras fait ta première création. Toi, tu n’as rien à payer.</p>
+
+    <div class="card">
+      <div id="with-code" hidden>
+        <p class="code-label">Code de ton ami</p>
+        <p class="code" id="code" aria-live="polite"></p>
+        <div class="actions">
+          <a class="btn" href="https://apps.apple.com/app/id6831674131">Télécharger Eduo</a>
+          <a class="btn btn--ghost" id="open">J’ai déjà Eduo : ouvrir avec ce code</a>
+          <button class="btn btn--ghost" id="copy" type="button">Copier le code</button>
+        </div>
+      </div>
+      <div id="without-code" hidden>
+        <p class="code-label">Ce lien ne contient pas de code valide.</p>
+        <p class="note" style="margin-top:8px">Demande à ton ami de te renvoyer son invitation, ou entre son code dans Eduo : Profil › Parrainage.</p>
+        <div class="actions"><a class="btn" href="https://apps.apple.com/app/id6831674131">Télécharger Eduo</a></div>
+      </div>
+    </div>
+
+    <ol>
+      <li><strong>Installe Eduo</strong> depuis l’App Store, sur iPhone ou iPad.</li>
+      <li><strong>Reviens sur cette page</strong> et touche « Ouvrir avec ce code », ou entre le code dans Eduo : Profil › Parrainage.</li>
+      <li><strong>Fais ta première création</strong> : un quiz, un programme ou une session SOS. C’est ce qui valide l’invitation de ton ami.</li>
+    </ol>
+    <p class="note">Le parrainage est réservé aux nouveaux élèves (Eduo installé depuis moins de 7 jours). Chaque élève ne peut être parrainé qu’une fois.</p>
+  </div>
+</main>
+<script>
+  // Mêmes règles que l’app et le serveur : 8 caractères, sans I, O, 0 ni 1.
+  (function () {
+    var raw = new URLSearchParams(location.search).get("code") || "";
+    var code = raw.toUpperCase().replace(/[\s\-_.]/g, "");
+    if (code.length === 12 && code.indexOf("EDUO") === 0) code = code.slice(4);
+    var valid = /^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{8}$/.test(code);
+    document.getElementById(valid ? "with-code" : "without-code").hidden = false;
+    if (!valid) return;
+    document.getElementById("code").textContent = code.slice(0, 4) + "-" + code.slice(4);
+    document.getElementById("open").href = "eduo://parrainage?code=" + code;
+    var copy = document.getElementById("copy");
+    copy.addEventListener("click", function () {
+      if (!navigator.clipboard) return;
+      navigator.clipboard.writeText(code).then(function () { copy.textContent = "Code copié"; });
+    });
+  })();
+</script>
+</body>
+</html>
